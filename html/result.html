@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Board</title>
+    <!-- icone -->
+    <link rel="SHORTCUT ICON" href="img/android-chrome-512x512.png">
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- style -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- navigation -->
+    <nav>
+    <div class="nav-wrapper">
+      <div class="col s12">
+      <a href="home.php" class="brand-logo center"><img src="img/logoW.png" alt="logo" id="logo"></a>
+        <a href="home.php" class="breadcrumb">Home</a>
+        <a href="form.php" class="breadcrumb">Formulaire</a>
+        <a href="reuslt.php" class="breadcrumb">Result</a>
+      </div>
+    </div>
+    </nav>
+
+    <h1 class="center-align">Your message is sent !</h1>
+    
+    <script>
+      //Turn our data holder in a string
+      let req_data_jsoned = JSON.stringify(req_data_object);
+
+
+//Fetch user info
+let api_url = "http://localhost:3000/api/get_user_info";
+fetch(api_url, {
+    method: 'POST',
+    body: req_data_jsoned,
+    headers: {'content-type': 'application/json'}
+}).then(function (res) {
+    if (res.ok) {
+        return res.json();
+    }
+    return Promise.reject(res);
+}).then(function(data){
+    console.log(data);
+    document.getElementById('inputFirstname').value = data[0].first_name;
+    document.getElementById('inputName').value = data[0].pe_name;
+    document.getElementById('inputEmail').value = data[0].pe_email;
+    document.getElementById('inputEmail').value = data[0].pe_email;
+
+    
+
+}).catch(function (err) {
+    console.warn(err);
+});
+    </script>
+
+ <!-- script -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+</body>
+</html>

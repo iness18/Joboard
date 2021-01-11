@@ -1,0 +1,103 @@
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Job Board - admin</title>
+        <!-- icone -->
+        <link rel="SHORTCUT ICON" href="img/android-chrome-512x512.png">
+        <!-- font -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- style -->
+        <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen,projection" />
+        <link rel="stylesheet" href="css/style.css">
+      </head>
+<body>
+    <h1>Admin page</h1>
+
+    <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">id</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Address</th>
+            <th scope="col">Zip code</th>
+            <th scope="col">City</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Password</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row" class="row3"></th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th scope="row"></th>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <script>
+        //Variables
+        let api_url = "http://localhost:3000/api/update_user";
+
+
+        //Fetch - GET
+        fetch(api_url, {
+          method: 'GET',
+          headers: { 'content-type': 'application/json' }
+        })
+
+          .then(function (res) {
+            if (res.ok) {
+              return res.json();
+            }
+            return Promise.reject(res);
+          }).then(function (data) {
+            //Use this function to modify content in the page, using data, which is the result of the query.
+            //Examples of how to get data from data[x] :
+            let x = 0;
+            while(data[x]!== undefined)
+            {
+
+                    let tbody = document.createElement('tbody');
+
+                    let tr = document.createElement('tr');
+                    tbody.appendChild(tr);
+
+                    let th = document.createElement('th');
+                    th.scope ="row";
+                    tr.appendChild(th);
+
+                    let td = document.createElement('td');
+                    td.innerHTML = data[x].first_name + data[x].pe_name + data[x].pe_address + data[x].city;
+                    th.appendChild(td);
+
+                    document.body.appendChild(tbody);
+                    console.log(tbody);
+                x++;
+            }
+      }).catch(function (err) {
+        console.warn(err);
+      });
+      </script>
+  <!-- script -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script src="js/bg.js"></script>
+  <script src="js/offer.js"></script>
+</body>
+</html>

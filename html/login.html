@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Board</title>
+    <!-- icone -->
+    <link rel="SHORTCUT ICON" href="img/android-chrome-512x512.png">
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- style -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/index.css">
+</head>
+<body id='cover'>
+
+<form id="login" class="form">
+<img src="img/logoV.png" alt="" id="logo">
+<h3>Sign in</h3>
+    <div class="form-group row col-auto">
+      <label for="pe_email">Email</label>
+      <input type="email" class="form-control" id="inputEmail">
+    </div>
+    <div class="form-group row col-auto">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="inputPassword">
+        <div id="login_error" class="collapse" style="color:red">The password or email is invalid, try again !</div>
+    </div>
+<div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="gridCheck">
+      <label class="form-check-label" for="gridCheck">
+        Remember me.
+      </label>
+    </div>
+    </div>
+  <button type="submit" class="btn btn-danger">Sign in</button>
+  <p></br>Not registered ? <a href="index.html"><span style="color:red"> Click here.</span></a></p>
+
+<a href="home.html" id="invit">Connect as a guest</a>
+</form>
+
+<script>
+    //Event triggering handle
+    function form_submit(event) {
+        console.log('Form submitted');
+        event.preventDefault();
+
+        //Declare var & init
+        let pe_email = $('#inputEmail').val();
+        let pe_password = $('#inputPassword').val();
+
+        //Data object holder creation
+        let req_data_object = {
+            pe_email: pe_email,
+            pe_password: pe_password
+        };
+
+        //Turn our data holder in a string
+        let req_data_jsoned = JSON.stringify(req_data_object);
+
+        //Some checkpoints
+        console.log(req_data_jsoned);
+
+        //Core fetch request
+        let api_url = "http://localhost:3000/api/login";
+        fetch(api_url, {
+            method: 'POST',
+            body: req_data_jsoned,
+            headers: {'content-type': 'application/json'}
+        }).then(function (res) {
+            if (res.ok) {
+                //console.log("Res is ok");
+                return res.json();
+            }
+            return Promise.reject(res);
+
+        }).then(function(data){
+            document.cookie = data.token;             // "token=" if I wanna name it later
+            console.log(document.cookie);
+            console.log(data.isadmin);
+
+            if (data.isadmin == '1' ) {
+                console.log(" Route : admin");
+                document.location.href="html/../admin.html";
+            } else {
+                console.log(" Route : home");
+                document.location.href = "html/../home.html";
+            }
+
+        }).catch(function (err) {
+            $('#login_error').show();
+            console.warn(err);
+        })
+    }
+
+
+    const form = document.getElementById('login');
+    form.addEventListener('submit', form_submit);
+
+</script>
+
+
+ <!-- script -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/bg.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Board</title>
+    <!-- icone -->
+    <link rel="SHORTCUT ICON" href="img/android-chrome-512x512.png">
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- style -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="css/index.css">
+</head>
+
+<body id='cover'>
+<form id="create_user" class="form">
+<img src="img/logoV.png" alt="" id="logo">
+<h3>Sign up</h3>
+    <div class="form-group row col-auto">
+      <label for="first_name">FirstName</label>
+      <input type="text" class="form-control" id="inputFirstname">
+    </div>
+    <div class="form-group row col-auto">
+      <label for="pe_name">Name</label>
+      <input type="text" class="form-control" id="inputName">
+    </div>
+  </div>
+    <div class="form-group row col-auto">
+      <label for="pe_email">Email</label>
+      <input type="email" class="form-control" id="inputEmail" required>
+        <div id="email_error" class="collapse" style="color:red">The email is already used</div>
+    </div>
+    <div class="form-group row col-auto">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="inputPassword">
+    </div>
+  </div>
+  <button type="submit" class="btn btn-danger">Sign up</button>
+
+  <p></br>Already signed up ? <a href="login.html"><span style="color:red"> Click here.</span></a></p>
+
+  <a href="home.html" id="invit">Connect as a guest</a>
+</form>
+
+<script>
+    //Event triggering handle
+    function form_submit(event) {
+        console.log('Form submitted');
+        event.preventDefault();
+
+        //Declare var & init
+        let pe_email = $('#inputEmail').val();
+        let pe_password = $('#inputPassword').val();
+        let pe_firstname = $('#inputFirstname').val();
+        let pe_name = $('#inputName').val();
+
+        //Data object holder creation
+        let req_data_object = {
+            pe_email: pe_email,
+            pe_password: pe_password,
+            pe_firstname: pe_firstname,
+            pe_name: pe_name
+        };
+
+        //Turn our data holder in a string
+        let req_data_jsoned = JSON.stringify(req_data_object);
+
+        //Some checkpoints
+        console.log(req_data_jsoned);
+
+        //Core fetch request
+        let api_url = "http://localhost:3000/api/create_user";
+        fetch(api_url, {
+            method: 'POST',
+            body: req_data_jsoned,
+            headers: {'content-type': 'application/json'}
+        }).then(function (res) {
+            if (res.ok) {
+                console.log('Checkpoint .then');
+                document.location.href = "html/../login.html";
+                return res.json();
+            }
+            return Promise.reject(res);
+
+        }).catch(function(err){
+            $('#email_error').show();
+            console.warn(err);
+
+        })
+
+    }
+
+
+    const form = document.getElementById('create_user');
+    form.addEventListener('submit', form_submit);
+</script>
+
+   <!-- script -->
+   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script src="js/bg.js"></script>
+</body>
+
+</html>

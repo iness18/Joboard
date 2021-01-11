@@ -1,0 +1,49 @@
+body{
+    background-image: url("../img/fond.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+  }
+
+h3{
+  text-align: center;
+}
+
+#logo{
+width: 20%;
+display: block;
+margin-left: auto;
+margin-right: auto;
+padding-bottom: 5%;
+padding-top: 1%;
+}
+
+.form-check-label, .form-group
+{
+    color:black;
+}
+
+.form
+{
+  background-color: #E5E4E4;
+  border: 1px solid white;
+  border-radius: 2%;
+  padding: 2%;
+  width: 60vh;
+  position: relative;
+  margin-left: 35%;
+  margin-top: 3%;
+}
+
+.form-group
+{
+  margin-left: 2%;
+}
+
+#invit
+{
+  text-decoration: none;
+  color: grey;
+  margin-top: 10px;
+}

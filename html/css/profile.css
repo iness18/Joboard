@@ -1,0 +1,49 @@
+body{
+    background-color: #E5E4E4;
+  }
+  
+  nav{
+    background: linear-gradient(0.25turn,#484848, #707070, #989898);
+  }
+  
+  #logo
+    {
+      margin-top: 0;
+      width: 50px;
+      height: 50px;
+      margin-bottom: 3%;
+    }
+
+  h1{
+    text-align: center;
+    margin-top:15px;
+  }
+  .card
+  {
+    margin-top: 2%;
+  }
+  
+  .form-check-label, .form-group
+  {
+      color:black;
+  }
+  
+  .form
+  {
+    background-color: #E5E4E4;
+    width: 60vh;
+    position: relative;
+    margin-left: 15%;
+  }
+  
+  .form-group
+  {
+    margin-left: 2%;
+  }
+  
+  #invit
+  {
+    text-decoration: none;
+    color: grey;
+    margin-top: 10px;
+  }

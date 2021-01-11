@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Offers</title>
+    <!-- icone -->
+    <link rel="SHORTCUT ICON" href="img/android-chrome-512x512.png">
+    <!-- font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- style -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="home.html"><img src="img/logoW.png" alt="logo" id="logo"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="jobOffer.html">Job offers</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="profile.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Profile
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">My offers</a>
+          <a class="dropdown-item" href="#">Documents</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<h1 class="center-align black-text">Job offers</h1>
+
+<!-- JS Script to recover info from database -->
+<script>
+    //Variables
+    let api_url = "http://localhost:3000/api/offers";
+
+
+    //Fetch - GET
+    fetch(api_url, {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' }
+    })
+
+      .then(function (res) {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(res);
+      }).then(function (data) {
+        //Use this function to modify content in the page, using data, which is the result of the query.
+        //Examples of how to get data from data[x] :
+        let x = 0;
+        while(data[x]!== undefined)
+        {
+          let div = document.createElement('div');
+          div.className = 'card p-3 text-right';
+          div.style.marginLeft = "20%";
+          div.style.marginRight = "20%";
+
+          let blockquote = document.createElement('blockquote');
+          blockquote.className = " blockquote mb-0";
+          div.appendChild(blockquote);
+      
+          let h3 = document.createElement('h3');
+          h3.id = "annonce1";
+          h3.innerText=data[x].ad_name;
+          h3.style.textAlign="left";
+          blockquote.appendChild(h3);
+      
+          let p = document.createElement('p');
+          p.id = "desc"
+          p.innerText=data[x].ad_desc;
+          p.style.textAlign="left";
+          blockquote.appendChild(p);
+      
+          let footer = document.createElement('footer');
+          footer.className = "blockquote-footer";
+          blockquote.appendChild(footer);
+      
+          let small = document.createElement('small');
+          small.className = "text-muted";
+          small.id = "nomco";
+          small.innerText=data[x].co_name;
+          footer.appendChild(small);
+      
+          let br = document.createElement('br');
+          footer.appendChild(br);
+      
+          //Button trigger modal
+          let button = document.createElement('button');
+          button.className = "btn btn-danger";
+          button.type = "button";
+          button.innerText = "En savoir plus";
+          button.addEventListener("click", myFunction);
+          footer.appendChild(button);
+      
+          //modal
+      
+          let modalDiv1 = document.createElement('div');
+          modalDiv1.className = "modal fade";
+          modalDiv1.id = "modal";
+          footer.appendChild(modalDiv1);
+      
+          let modalDiv2 = document.createElement('div');
+          modalDiv2.className = "modal-dialog modal-dialog-centered";
+          modalDiv1.appendChild(modalDiv2);
+      
+          let modalDiv3 = document.createElement('div');
+          modalDiv3.className = "modal-content";
+          modalDiv2.appendChild(modalDiv3);
+      
+          let modalDiv4 = document.createElement('div');
+          modalDiv4.className = "modal-header";
+          modalDiv3.appendChild(modalDiv4);
+      
+          let modalH5 = document.createElement('h5');
+          modalH5.className = "modal-title";
+          modalH5.id = "exampleModalLongTitle";
+          modalH5.innerText = data[x].ad_name;
+          modalDiv4.appendChild(modalH5);
+
+          let modalBtn = document.createElement('button');
+          button.className = "btn btn-danger";
+          button.type = "button";
+          button.innerText = "En savoir plus";
+          modalDiv4.appendChild(modalBtn);
+          
+          let modalSpan = document.createElement('span');
+          modalBtn.appendChild(modalSpan);
+      
+          let modalDiv5 = document.createElement('div');
+          modalDiv5.className = "modal-body";
+          modalDiv5.innerText =`Description: ${data[x].ad_desc}, \n Details: ${data[x].detail}, \n location: ${data[x].ad_country}, \n Entreprise: ${data[x].co_name}`;
+          modalDiv3.appendChild(modalDiv5);
+      
+          let modalDiv6 = document.createElement('div');
+          modalDiv6.className = "modal-footer";
+          modalDiv3.appendChild(modalDiv6);
+
+          let modalBtn1 = document.createElement('a');
+          modalBtn1.type = 'a';
+          modalBtn1.href="form.php";
+          modalBtn1.className = "btn btn-secondary";
+          modalBtn1.innerText = "Apply";
+          modalDiv6.appendChild(modalBtn1);
+
+          document.body.appendChild(div);
+          console.log('div');
+          x++;
+    }
+
+  }).catch(function (err) {
+    console.warn(err);
+  });
+  </script>
+
+    <!-- script -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/bg.js"></script>
+    <script src="js/offer.js"></script>
+    </body>
+    </html>
